@@ -22,14 +22,10 @@ export const Home = (): JSX.Element => {
     const onJoin = (): void => {
         // @ts-ignore
         const roomCode: string = joinRef.current.value;
-        axios.post("/api/leyangimplementfaster", {
-            "username": "baf",
-            "code": roomCode,
-        }).then((res): void => {
-            nav(`/table?id=${res.data.id}`);
-        }).catch((err): void => {
-            console.log("Error occured when joining room:", err);
-        });
+    }
+
+    const onCreate = (): void => {
+        console.log("Create room");
     }
 
     return (
@@ -56,6 +52,7 @@ export const Home = (): JSX.Element => {
                                 />
                             </Box>
                             <Button variant="contained" onClick={onJoin}>Join room!</Button>
+                            <Button variant="contained" onClick={onCreate}>Create a room!</Button>
                         </Stack>
                     </div>
                     <img className="table-image" src={"img/roundtable.png"} />

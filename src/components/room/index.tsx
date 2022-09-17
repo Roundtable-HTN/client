@@ -11,6 +11,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 
 import { SideNav } from "./sidenav";
+import { UserActivity } from "./userActivity";
 
 const drawerWidth = 240;
 
@@ -38,28 +39,7 @@ export const Room = (props: any): JSX.Element => {
     return (
         <Box sx={{ display: 'flex' }}>
             <CssBaseline />
-            <AppBar
-                position="fixed"
-                sx={{
-                    width: { sm: `calc(100% - ${drawerWidth}px)` },
-                    ml: { sm: `${drawerWidth}px` },
-                }}
-            >
-                <Toolbar>
-                    <IconButton
-                        color="inherit"
-                        aria-label="open drawer"
-                        edge="start"
-                        onClick={handleDrawerToggle}
-                        sx={{ mr: 2, display: { sm: 'none' } }}
-                    >
-                        <MenuIcon />
-                    </IconButton>
-                    <Typography variant="h6" noWrap component="div">
-                        RoundTable Room {roomId}
-                    </Typography>
-                </Toolbar>
-            </AppBar>
+
             <Box
                 component="nav"
                 sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
@@ -99,6 +79,8 @@ export const Room = (props: any): JSX.Element => {
                     Round table round table!!!
                 </Typography>
             </Box>
+
+            <UserActivity roomId={roomId} />
         </Box>
     );
 }
