@@ -1,4 +1,6 @@
 import * as React from "react";
+import io from 'socket.io-client';
+import { useSearchParams } from "react-router-dom";
 
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -14,12 +16,47 @@ import { SideNav } from "./sidenav";
 import { UserActivity } from "./userActivity";
 
 const drawerWidth = 240;
+const socket = io();
 
 export const Room = (props: any): JSX.Element => {
     const roomId = "Bob";
 
     const { window } = props;
     const [mobileOpen, setMobileOpen] = React.useState(false);
+    const [searchParams, setSearchParams] = useSearchParams();
+
+    const [isConnected, setIsConnected] = React.useState(socket.connected);
+    const [error, setError] = React.useState("");
+
+    React.useEffect(() => {
+        if (!searchParams.get("code")) {
+            setError("No room code");
+        }
+        else if (searchParams.get("action") !== "join" && searchParams.get("action") !== "create") {
+            setError("Invalid action");
+        }
+        else {
+            socket.on('connect', () => {
+                socket.emit(`${searchParams.get("action")}_room`, { code: searchParams.get("code") }, (response: any) => {
+                    if (response == "ok") {
+                        setIsConnected(true);
+                    }
+                    else {
+                        setError(`Could not ${searchParams.get("action")} room`);
+                    }
+                })
+            });
+
+            socket.on('disconnect', () => {
+                setIsConnected(false);
+            });
+
+            return () => {
+                socket.off('connect');
+                socket.off('disconnect');
+            };
+        }
+    }, [])
 
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
