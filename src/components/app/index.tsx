@@ -4,16 +4,11 @@ import { BrowserRouter, Routes, Route, useNavigate, NavigateFunction } from "rea
 import { NavBar } from "./nav";
 import { NotFound } from "../notfound";
 
-import M from 'materialize-css';
 import "../index.scss";
 import { Home } from "../home";
 
 export const _App = (): JSX.Element => {
     const nav: NavigateFunction = useNavigate();
-
-    React.useEffect((): void => {
-        M.AutoInit();
-    });
 
     return (
         <div className="page">
