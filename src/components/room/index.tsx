@@ -18,10 +18,13 @@ import { UserActivity } from "./userActivity";
 const drawerWidth = 240;
 const socket = io();
 
+declare const window: any;
+window.socket = socket;
+
 export const Room = (props: any): JSX.Element => {
     const roomId = "Bob";
 
-    const { window } = props;
+    const { windoww } = props;
     const [mobileOpen, setMobileOpen] = React.useState(false);
     const [searchParams, setSearchParams] = useSearchParams();
 
@@ -71,7 +74,7 @@ export const Room = (props: any): JSX.Element => {
         </div>
     );
 
-    const container = window !== undefined ? () => window().document.body : undefined;
+    const container = windoww !== undefined ? () => windoww().document.body : undefined;
 
     return (
         <Box sx={{ display: 'flex' }}>
