@@ -10,12 +10,11 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 
-import { Props } from "../../util/nav";
 import { SideNav } from "./sidenav";
 
 const drawerWidth = 240;
 
-export const Room = (props: Props): JSX.Element => {
+export const Room = (props: any): JSX.Element => {
     const roomId = "Bob";
 
     const { window } = props;
