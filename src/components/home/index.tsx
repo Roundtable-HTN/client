@@ -58,7 +58,7 @@ export const Home = (): JSX.Element => {
                             <Button variant="contained" onClick={onJoin}>Join room!</Button>
                         </Stack>
                     </div>
-                    <img className="table-image" src={"img/roundtable1.png"} />
+                    <img className="table-image" src={"img/roundtable.png"} />
                 </Stack>
             </Container>
         </div>

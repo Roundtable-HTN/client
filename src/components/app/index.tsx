@@ -12,13 +12,11 @@ import Divider from "@mui/material/Divider";
 import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
 import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemText from "@mui/material/ListItemText";
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
+
+import { NavDrawerItems, NavItems } from "./navItems";
 
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
@@ -26,11 +24,9 @@ import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import { Room } from "../room";
 
-import { Props, navItems, NavLink } from "../../util/nav";
-
 const drawerWidth = 240;
 
-export const _App = (props: Props) => {
+export const _App = (props: any) => {
     const nav: NavigateFunction = useNavigate();
 
     const { window } = props;
@@ -47,13 +43,7 @@ export const _App = (props: Props) => {
             </Typography>
             <Divider />
             <List>
-                {navItems.map((item: NavLink) => (
-                    <ListItem key={item.text} disablePadding>
-                        <ListItemButton onClick={() => { nav(item.href) }} sx={{ textAlign: "center" }}>
-                            <ListItemText primary={item.text} />
-                        </ListItemButton>
-                    </ListItem>
-                ))}
+                <NavDrawerItems />
             </List>
         </Box>
     );
@@ -81,11 +71,7 @@ export const _App = (props: Props) => {
                         RoundTable
                     </Typography>
                     <Box sx={{ display: { xs: "none", sm: "block" } }}>
-                        {navItems.map((item: NavLink) => (
-                            <Button key={item.text} onClick={() => { nav(item.href) }} sx={{ color: "#fff" }}>
-                                {item.text}
-                            </Button>
-                        ))}
+                        <NavItems />
                     </Box>
                 </Toolbar>
             </AppBar>
