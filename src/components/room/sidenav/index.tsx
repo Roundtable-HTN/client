@@ -18,6 +18,24 @@ const SideNavItem = (props: { text: string, click: () => void, icon: JSX.Element
     )
 }
 
+export const SideNav = (): JSX.Element => {
+    const nav: NavigateFunction = useNavigate();
+
+    return (
+        <List>
+            <SideNavItem
+                text="Back to Home"
+                click={(): void => { nav("/") }}
+                icon={<HomeIcon />}
+            />
+
+            <Divider />
+
+            {plugins()}
+        </List>
+    )
+}
+
 const plugins = (): Array<JSX.Element> => {
     return (
         [
@@ -28,23 +46,5 @@ const plugins = (): Array<JSX.Element> => {
                 icon={<VideogameAssetIcon />}
             />
         ]
-    )
-}
-
-export const SideNav = (): JSX.Element => {
-    const nav: NavigateFunction = useNavigate();
-
-    return (
-        <List>
-            <SideNavItem
-                text="Home"
-                click={(): void => { nav("/") }}
-                icon={<HomeIcon />}
-            />
-
-            <Divider />
-
-            {plugins()}
-        </List>
     )
 }
