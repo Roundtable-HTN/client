@@ -1,5 +1,5 @@
 import * as React from "react";
-import { BrowserRouter, Routes, Route, useNavigate, NavigateFunction } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useNavigate, NavigateFunction, Link } from "react-router-dom";
 
 import { NotFound } from "../notfound";
 
@@ -64,11 +64,11 @@ export const _App = (props: any) => {
                         <MenuIcon />
                     </IconButton>
                     <Typography
-                        variant="h6"
+                        variant="h5"
                         component="div"
                         sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
                     >
-                        RoundTable
+                        Hack the North 2022 RoundTable
                     </Typography>
                     <Box sx={{ display: { xs: "none", sm: "block" } }}>
                         <NavItems />

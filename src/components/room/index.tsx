@@ -14,6 +14,7 @@ import Typography from '@mui/material/Typography';
 
 import { SideNav } from "./sidenav";
 import { UserActivity } from "./userActivity";
+import { RoundTable } from "./roundtable";
 
 const drawerWidth = 240;
 const socket = io();
@@ -28,7 +29,7 @@ export const Room = (props: any): JSX.Element => {
     const [isConnected, setIsConnected] = React.useState(socket.connected);
     const [error, setError] = React.useState("");
 
-    React.useEffect(() => {
+    React.useEffect((): any => {
         if (!searchParams.get("code")) {
             setError("No room code");
         }
@@ -51,18 +52,18 @@ export const Room = (props: any): JSX.Element => {
                 setIsConnected(false);
             });
 
-            return () => {
+            return (): void => {
                 socket.off('connect');
                 socket.off('disconnect');
             };
         }
-    }, [])
+    }, []);
 
-    const handleDrawerToggle = () => {
+    const handleDrawerToggle = (): void => {
         setMobileOpen(!mobileOpen);
     };
 
-    const drawer = (
+    const drawer: JSX.Element = (
         <div>
             <Toolbar />
             <Divider />
@@ -112,9 +113,7 @@ export const Room = (props: any): JSX.Element => {
                 component="main"
                 sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
             >
-                <Typography paragraph>
-                    Round table round table!!!
-                </Typography>
+                <RoundTable />
             </Box>
 
             <UserActivity roomId={roomId} />

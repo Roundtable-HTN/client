@@ -10,9 +10,12 @@ import Divider from '@mui/material/Divider';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
+import { User } from '../../../util/models';
+import { Chat } from '../chat';
 
 export const UserActivity = (props: { roomId: string }): JSX.Element => {
     const drawerWidth = 240;
@@ -32,40 +35,64 @@ export const UserActivity = (props: { roomId: string }): JSX.Element => {
                 variant="permanent"
                 anchor="right"
                 sx={{
+                    paddingBottom: 4,
                     width: drawerWidth,
                     flexShrink: 0,
                     [`& .MuiDrawer-paper`]: { width: drawerWidth, boxSizing: 'border-box' },
                 }}
             >
                 <Toolbar />
-                <Box sx={{ overflow: 'auto' }}>
+                <Box sx={{ overflow: 'auto', paddingBottom: 10 }}>
+                    <Typography variant="h6" marginLeft={1.5} marginTop={1}>
+                        Online Users
+                    </Typography>
                     <List>
-                        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-                            <ListItem key={text} disablePadding>
-                                <ListItemButton>
-                                    <ListItemIcon>
-                                        {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                                    </ListItemIcon>
-                                    <ListItemText primary={text} />
-                                </ListItemButton>
-                            </ListItem>
-                        ))}
+                        {onlineUsers([{ username: "Patrick", online: true }])}
                     </List>
+
                     <Divider />
+
+                    <Typography variant="h6" marginLeft={1.5} marginTop={0}>
+                        Offline Users
+                    </Typography>
                     <List>
-                        {['All mail', 'Trash', 'Spam'].map((text, index) => (
-                            <ListItem key={text} disablePadding>
-                                <ListItemButton>
-                                    <ListItemIcon>
-                                        {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                                    </ListItemIcon>
-                                    <ListItemText primary={text} />
-                                </ListItemButton>
-                            </ListItem>
-                        ))}
+                        {offlineUsers([{ username: "Jimmy", online: false }])}
                     </List>
+
+                    <Chat />
                 </Box>
             </Drawer>
         </Box>
     );
+}
+
+const onlineUsers = (users: User[]): JSX.Element[] => {
+    return (
+        users.map((user: User): JSX.Element => {
+            return <UserStatus key={user.username} user={user} />
+        })
+    );
+}
+
+const offlineUsers = (users: User[]): JSX.Element[] => {
+    return (
+        users.map((user: User): JSX.Element => {
+            return <UserStatus key={user.username} user={user} />
+        })
+    );
+}
+
+const UserStatus = (props: { user: User }): JSX.Element => {
+    return (
+        <List>
+            <ListItem disablePadding>
+                <ListItemButton>
+                    <ListItemIcon>
+                        <AccountCircleIcon />
+                    </ListItemIcon>
+                    <ListItemText primary={props.user.username} />
+                </ListItemButton>
+            </ListItem>
+        </List>
+    )
 }
