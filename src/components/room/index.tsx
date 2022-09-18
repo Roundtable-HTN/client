@@ -33,9 +33,16 @@ const _Room = (props: any): JSX.Element => {
         const code = searchParams.get("code");
 
         // good but baf concurrency
+        console.log(values);
         if (!values.sessionId) {
-            socket.emit(`user_register`, {}, (response: number): void => {
-                ctx.setValue({ ...values, sessionId: response });
+            console.log("URMUM");
+            let username = `bob_${Date.now()}`;
+            socket.emit(`user_register`, {name: username}, (response: number): void => {
+                console.log(response);
+                socket.auth.userId = response;
+                console.log(socket.auth);
+                socket.disconnect().connect();
+                ctx.setValue({ ...values, sessionId: response, username: username  });
             });
         }
 
@@ -46,8 +53,12 @@ const _Room = (props: any): JSX.Element => {
             setError("Invalid action");
         }
         else {
+            console.log("amoog");
             socket.on('connect', () => {
-                socket.emit(`${searchParams.get("action")}_room`, { code: code }, (response: any) => {
+                console.log("amoog2");
+                socket.emit(`room_${searchParams.get("action")}`, { code: code }, (response: any) => {
+                    socket.roomCode = code;
+                    console.log(response);
                     if (response == "ok") {
                         setIsConnected(true);
                     }

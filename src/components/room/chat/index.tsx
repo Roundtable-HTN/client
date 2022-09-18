@@ -17,8 +17,9 @@ export const Chat = (): JSX.Element => {
 
     React.useEffect(() => {
         ctx.value.socket.on(`message_sent`, (response: any): void => {
+            console.log("Message received");
             // @ts-ignore
-            setMessages([...messages, { username: ctx.value.username, content: content }]);
+            setMessages((prevMsgs) => [...prevMsgs, { username: response.username, content: response.msg }]);
         });
     }, []);
 
@@ -38,9 +39,10 @@ export const Chat = (): JSX.Element => {
         if (content) {
             // @ts-ignore
             msgRef.current.value = "";
-            socket.emit(`send_message`, { code: ctx.value.roomCode }, (response: any): void => {
+            console.log(ctx.value.socket.auth);
+            socket.emit(`send_message`, { username: ctx.value.username, code: ctx.value.socket.roomCode, msg: content }, (response: any): void => {
                 if (response !== "ok") {
-                    console.log("Error occurred when sending message");
+                    console.log("Error occurred when sending message:", response);
                 }
             });
         }
