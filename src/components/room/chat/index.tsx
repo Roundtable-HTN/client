@@ -13,9 +13,9 @@ const MessageElement = (props: { sender: string, children: any }): JSX.Element =
 
 export const Chat = (): JSX.Element => {
     const [messages, setMessages] = React.useState([]);
+    const ctx = React.useContext(SocketContext);
 
     React.useEffect(() => {
-        const ctx = React.useContext(SocketContext);
         ctx.value.socket.on(`message_sent`, (response: any): void => {
             // @ts-ignore
             setMessages([...messages, { username: ctx.value.username, content: content }]);
@@ -31,7 +31,6 @@ export const Chat = (): JSX.Element => {
     }
 
     const sendMessage = (): void => {
-        const ctx = React.useContext(SocketContext);
         const socket = ctx.value.socket;
 
         // @ts-ignore
