@@ -1,28 +1,25 @@
 import * as React from "react";
 import { useSearchParams } from "react-router-dom";
 
-import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import Divider from '@mui/material/Divider';
 import Drawer from '@mui/material/Drawer';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
 
 import { SideNav } from "./sidenav";
 import { UserActivity } from "./userActivity";
 import { RoundTable } from "./roundtable";
 
-import { SocketContext, SocketProvider } from "./socket";
+import { SocketContext, SocketProvider, SocketValues } from "./socket_context";
+import { SocketInfo } from "../../util/models";
+import { Socket } from "socket.io-client";
 
 const drawerWidth = 240;
 
 const _Room = (props: any): JSX.Element => {
-    const socket = React.useContext(SocketContext);
-
-    const roomId = "Bob";
+    const socket: Socket = React.useContext(SocketContext);
+    const values: SocketInfo = React.useContext(SocketValues);
 
     const { windoww } = props;
     const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -118,7 +115,7 @@ const _Room = (props: any): JSX.Element => {
                 <RoundTable />
             </Box>
 
-            <UserActivity roomId={roomId} />
+            <UserActivity roomId={searchParams.get("id")!} />
         </Box>
     );
 }

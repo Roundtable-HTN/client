@@ -59,6 +59,7 @@ export const UserActivity = (props: { roomId: string }): JSX.Element => {
                         {offlineUsers([{ username: "Jimmy", online: false }])}
                     </List>
 
+                    <Divider />
                     <Chat />
                 </Box>
             </Drawer>

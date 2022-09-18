@@ -7,3 +7,8 @@ export interface Message {
     username: string;
     content: string;
 }
+
+export interface SocketInfo {
+    username: string;
+    sessionId: string;
+}

@@ -1,6 +1,6 @@
 import React from 'react';
 import TextField from '@mui/material/TextField';
-import { Paper } from '@mui/material';
+import { Divider, Paper, Typography } from '@mui/material';
 import { Message } from '../../../util/models';
 
 const MessageElement = (props: { sender: string, children: any }): JSX.Element => {
@@ -25,13 +25,16 @@ export const Chat = (): JSX.Element => {
         const content = msgRef.current.value;
         if (content) {
             // @ts-ignore
-            setMessages([...messages, { username: username, content: content }]); // @ts-ignore
+            setMessages([...messages, { username: "Jimmy", content: content }]); // @ts-ignore
             msgRef.current.value = "";
         }
     }
 
     return (
         <>
+            <Typography variant="h6" marginLeft={1.5} marginTop={0}>
+                Chat
+            </Typography>
             <Paper style={{ overflow: 'auto' }}>
                 <div className="chat-container">
                     {getMessages()}
