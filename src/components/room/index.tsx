@@ -1,5 +1,4 @@
 import * as React from "react";
-import io from 'socket.io-client';
 import { useSearchParams } from "react-router-dom";
 
 import AppBar from '@mui/material/AppBar';
@@ -16,13 +15,16 @@ import { SideNav } from "./sidenav";
 import { UserActivity } from "./userActivity";
 import { RoundTable } from "./roundtable";
 
-const drawerWidth = 240;
-const socket = io();
+import { SocketContext, SocketProvider } from "./socket";
 
-export const Room = (props: any): JSX.Element => {
+const drawerWidth = 240;
+
+const _Room = (props: any): JSX.Element => {
+    const socket = React.useContext(SocketContext);
+
     const roomId = "Bob";
 
-    const { window } = props;
+    const { windoww } = props;
     const [mobileOpen, setMobileOpen] = React.useState(false);
     const [searchParams, setSearchParams] = useSearchParams();
 
@@ -72,7 +74,7 @@ export const Room = (props: any): JSX.Element => {
         </div>
     );
 
-    const container = window !== undefined ? () => window().document.body : undefined;
+    const container = windoww !== undefined ? () => windoww().document.body : undefined;
 
     return (
         <Box sx={{ display: 'flex' }}>
@@ -119,4 +121,12 @@ export const Room = (props: any): JSX.Element => {
             <UserActivity roomId={roomId} />
         </Box>
     );
+}
+
+export const Room = (props: any): JSX.Element => {
+    return (
+        <SocketProvider>
+            <_Room />
+        </SocketProvider>
+    )
 }
