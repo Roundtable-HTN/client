@@ -1,5 +1,4 @@
 import * as React from "react";
-import io from 'socket.io-client';
 import { useSearchParams } from "react-router-dom";
 
 import AppBar from '@mui/material/AppBar';
@@ -15,13 +14,13 @@ import Typography from '@mui/material/Typography';
 import { SideNav } from "./sidenav";
 import { UserActivity } from "./userActivity";
 
+import { SocketContext, SocketProvider } from "./socket";
+
 const drawerWidth = 240;
-const socket = io();
 
-declare const window: any;
-window.socket = socket;
+const _Room = (props: any): JSX.Element => {
+    const socket = React.useContext(SocketContext);
 
-export const Room = (props: any): JSX.Element => {
     const roomId = "Bob";
 
     const { windoww } = props;
@@ -123,4 +122,12 @@ export const Room = (props: any): JSX.Element => {
             <UserActivity roomId={roomId} />
         </Box>
     );
+}
+
+export const Room = (props: any): JSX.Element => {
+    return (
+        <SocketProvider>
+            <_Room />
+        </SocketProvider>
+    )
 }
