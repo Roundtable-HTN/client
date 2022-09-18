@@ -39,10 +39,6 @@ export const NavItems = (): JSX.Element => {
                 <InfoIcon />
                 <div className="nav-item-label">About</div>
             </Button>
-
-            <Button onClick={() => { nav("/room") }} sx={{ color: "#fff" }}>
-                Room
-            </Button>
         </>
     );
 }

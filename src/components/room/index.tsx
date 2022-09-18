@@ -11,15 +11,16 @@ import { SideNav } from "./sidenav";
 import { UserActivity } from "./userActivity";
 import { RoundTable } from "./roundtable";
 
-import { SocketContext, SocketProvider, SocketValues } from "./socket_context";
+import { SocketContext, SocketProvider } from "./socket_context";
 import { SocketInfo } from "../../util/models";
 import { Socket } from "socket.io-client";
 
 const drawerWidth = 240;
 
 const _Room = (props: any): JSX.Element => {
-    const socket: Socket = React.useContext(SocketContext);
-    const values: SocketInfo = React.useContext(SocketValues);
+    const ctx = React.useContext(SocketContext);
+    const values = ctx.value;
+    const socket: Socket = ctx.value.socket;
 
     const { windoww } = props;
     const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -29,6 +30,15 @@ const _Room = (props: any): JSX.Element => {
     const [error, setError] = React.useState("");
 
     React.useEffect((): any => {
+        const code = searchParams.get("code");
+
+        // good but baf concurrency
+        if (!values.sessionId) {
+            socket.emit(`user_register`, {}, (response: number): void => {
+                ctx.setValue({ ...values, sessionId: response });
+            });
+        }
+
         if (!searchParams.get("code")) {
             setError("No room code");
         }
@@ -37,17 +47,17 @@ const _Room = (props: any): JSX.Element => {
         }
         else {
             socket.on('connect', () => {
-                socket.emit(`${searchParams.get("action")}_room`, { code: searchParams.get("code") }, (response: any) => {
+                socket.emit(`${searchParams.get("action")}_room`, { code: code }, (response: any) => {
                     if (response == "ok") {
                         setIsConnected(true);
                     }
                     else {
                         setError(`Could not ${searchParams.get("action")} room`);
                     }
-                })
+                });
             });
 
-            socket.on('disconnect', () => {
+            socket.on('disconnect', (): void => {
                 setIsConnected(false);
             });
 
@@ -115,7 +125,7 @@ const _Room = (props: any): JSX.Element => {
                 <RoundTable />
             </Box>
 
-            <UserActivity roomId={searchParams.get("id")!} />
+            <UserActivity roomId={searchParams.get("code")!} />
         </Box>
     );
 }

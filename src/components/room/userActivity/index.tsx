@@ -27,7 +27,7 @@ export const UserActivity = (props: { roomId: string }): JSX.Element => {
             <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
                 <Toolbar>
                     <Typography variant="h6" noWrap component="div">
-                        RoundTable Room {roomId}
+                        RoundTable Room <strong>{roomId}</strong>
                     </Typography>
                 </Toolbar>
             </AppBar>

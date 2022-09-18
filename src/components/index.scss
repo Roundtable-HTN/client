@@ -39,3 +39,10 @@ body {
     background-color: white;
     width: 100%;
 }
+
+.write-message-items {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-around;
+}

@@ -100,7 +100,7 @@ export const _App = (props: any) => {
                     <div className="router-outlet">
                         <Routes>
                             <Route path="/" element={<Home />} />
-                            <Route path="/room" element={<Room />} />
+                            <Route path="/join" element={<Room />} />
                             <Route path="*" element={<NotFound />} />
                         </Routes>
                     </div>
